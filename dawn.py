@@ -15,7 +15,7 @@ def nonlinear_scaling_parameter(image, k1=0.5, k2=0.2):
     return a
 
 
-def apply_nite(hdr, kernels=(1, 4), k1=0.5, k2=0.5, k3=1.0, nonlinear_scaling=False):
+def apply_dawn(hdr, kernels=(1, 4), k1=0.5, k2=0.5, k3=1.0, nonlinear_scaling=False):
     a = nonlinear_scaling_parameter(hdr, k1, k2) if nonlinear_scaling else adaptive_scaling_parameter(hdr, k1, k2, k3) 
     rows, cols, _ = hdr.shape
     v = np.max(hdr, axis=2) 
@@ -38,5 +38,5 @@ def apply_nite(hdr, kernels=(1, 4), k1=0.5, k2=0.5, k3=1.0, nonlinear_scaling=Fa
 if __name__ == '__main__':
     im_f64 = iio.imread("hdr-images/Desk_oBA2.hdr", format="HDR-FI")
     im = im_f64.astype(np.float32)
-    ldr = apply_nite(im, nonlinear_scaling=True)
-    iio.imwrite("ldr-Desk_oBA2.png", ldr)
+    ldr = apply_dawn(im, nonlinear_scaling=True)
+    iio.imwrite("ldr-outputs/Desk_oBA2.png", ldr)
